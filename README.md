@@ -1,0 +1,1 @@
+This is a classroom project for The Complete JS By Jonas provided on the Udemy plateform.
