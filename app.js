@@ -1,10 +1,46 @@
 /**
+ * Global App Controller
+ */
+
+ var controller = (function(budgetCtrl, UICtrl){
+     //
+    var setupEventListener = function() {
+        var DOMStrings = UIController.getDOMStrings();
+        document.querySelector(DOMStrings.inputBtn).addEventListener('click', ctrlAddItem);
+
+        document.addEventListener('keypress', function(event){
+            if(event.key === 13 || event.which === 13) {//Enter key is presed
+                ctrlAddItem();
+            }
+        });
+    }
+
+    
+    var ctrlAddItem = function() {
+    //TODO
+      //1. Get the field input data.
+      var  input = UIController.getInput();
+      console.log(input);
+
+      //2. Add the item to the budget controller.
+      //3. Add the item to the UI.
+      //4. Calculate the budget
+      //5. Display budget on the UI.
+    }
+
+    return {
+        init: function(){
+            console.log('Applicaiton has started.');
+            setupEventListener();
+        }
+    }
+ })(budgetController, UIController);
+ 
+ /**
  * Budget Controller
  */
 
-var budgetController = (function(){
-   
-    
+var budgetController = (function(){ 
 })();
 
 /**
@@ -31,32 +67,8 @@ var UIController = (function(){
     }
 })();
 
-
 /**
- * Global App Controller
+ * initialize application.
  */
 
- var controller = (function(budgetCtrl, UICtrl){
-     var DOMStrings = UICtrl.getDOMStrings();
-    var ctrlAddItem = function() {
-    //TODO
-      //1. Get the field input data.
-      var  input = UICtrl.getInput();
-      console.log(input);
-
-      //2. Add the item to the budget controller.
-      //3. Add the item to the UI.
-      //4. Calculate the budget
-      //5. Display budget on the UI.
-    }
-
-
-  document.querySelector(DOMStrings.inputBtn).addEventListener('click', ctrlAddItem);
-
-  document.addEventListener('keypress', function(event){
-    if(event.key === 13 || event.which === 13) {//Enter key is presed
-        ctrlAddItem();
-    }
-  });
-
- })(budgetController, UIController);
+ controller.init();
