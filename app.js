@@ -53,6 +53,29 @@ var budgetController = (function(){
             inc: 0
         }  
     };
+    
+    //Object containing all public method for budgetController module.
+    return {
+        addItem: function(type, des, val) {
+            var newItem, ID;
+            //Create new ID 
+            if(data.allItems[type].length > 0) {
+                ID = data.allItems[type][data.allItems[type].length-1].id + 1;
+            } else {
+                ID = 0;
+            }
+            //new item based on 'inc' or 'exp' type.
+              if(type === 'exp') {
+                newItem = new Expense(ID, des, val);
+            }else if (type === 'inc') {
+                newItem = new Income(ID, des, val);
+            }
+            
+            //push it into the data structure.
+            data.allItems[type].push(newItem);        
+            return newItem;     
+        } 
+    }
 
 })();
 
@@ -76,12 +99,14 @@ var budgetController = (function(){
 
     
     var ctrlAddItem = function() {
+        var input, newItem;
     //TODO
       //1. Get the field input data.
-      var  input = UICtrl.getInput();
+      input = UICtrl.getInput();
       console.log(input);
 
       //2. Add the item to the budget controller.
+      newItem = budgetCtrl.addItem(input.type, input.description, input.value);
       //3. Add the item to the UI.
       //4. Calculate the budget
       //5. Display budget on the UI.
