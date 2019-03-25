@@ -19,9 +19,13 @@ var UIController = (function(){
         dateLabel: '.budget__title--month'
     }
 
-    var changedType = function(event){
-        
-    }
+    var nodeListForEach = function(list, callback){
+        for(var i =0; i< list.length; i++) {
+            callback(list[i],i)
+        }
+    };
+
+  
 
     var formatNumber =  function(num, type){
         /*
@@ -118,13 +122,7 @@ var UIController = (function(){
         },
         displayPercentages: function(percentages) {
             var fields = document.querySelectorAll(DOMStrings.expensesPercentageLabel);
-            
-            var nodeListForEach = function(list, callback){
-                for(var i =0; i< list.length; i++) {
-                    callback(list[i],i)
-                }
-            };
-
+        
             nodeListForEach(fields, function(current,index){
                 if(percentages[index]>0){
                    current.textContent= percentages[index]+"%"; 
@@ -143,6 +141,19 @@ var UIController = (function(){
             year = now.getFullYear();
             month = now.getMonth();
             document.querySelector(DOMStrings.dateLabel).textContent = months[month] + ' ' +year
+        },
+        changedType:function(){
+            var fields = document.querySelectorAll(
+                DOMStrings.inputType+','+
+                DOMStrings.inputDescription+','+
+                DOMStrings.inputValue
+            );
+    
+            nodeListForEach(fields, (curr)=>{
+                curr.classList.toggle('red-focus');
+            });
+
+            document.querySelector(DOMStrings.inputBtn).classList.toggle('red');
         },
         getDOMStrings: function(){
             return DOMStrings;
@@ -295,7 +306,7 @@ var budgetController = (function(){
         document.querySelector(DOMStrings.container).addEventListener('click',ctrlDeleteItem);
         
         //
-        document.querySelector(DOM.inputType).addEventListener('change', UICtrl.changedType);
+        document.querySelector(DOMStrings.inputType).addEventListener('change', UICtrl.changedType);
     }
 
     //calculate and update budget.
