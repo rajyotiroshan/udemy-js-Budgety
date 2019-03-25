@@ -15,7 +15,12 @@ var UIController = (function(){
         expenseLabel: ".budget__expenses--value",
         percentageLabel: ".budget__expenses--percentage",
         container: '.container',
-        expensesPercentageLabel: '.item__percentage'
+        expensesPercentageLabel: '.item__percentage',
+        dateLabel: '.budget__title--month'
+    }
+
+    var changedType = function(event){
+        
     }
 
     var formatNumber =  function(num, type){
@@ -130,6 +135,14 @@ var UIController = (function(){
             });
 
 
+        },
+        displayMonth: function(){
+            var now, year, month, months;
+            months = ['January', 'February', 'March', 'April','May','June','July','August','September','October','November','December'];
+            now = new Date();
+            year = now.getFullYear();
+            month = now.getMonth();
+            document.querySelector(DOMStrings.dateLabel).textContent = months[month] + ' ' +year
         },
         getDOMStrings: function(){
             return DOMStrings;
@@ -280,6 +293,9 @@ var budgetController = (function(){
 
         //event listener on container of income and expenses list.
         document.querySelector(DOMStrings.container).addEventListener('click',ctrlDeleteItem);
+        
+        //
+        document.querySelector(DOM.inputType).addEventListener('change', UICtrl.changedType);
     }
 
     //calculate and update budget.
@@ -351,6 +367,7 @@ var budgetController = (function(){
     return {
         init: function(){
             console.log('Applicaiton has started.');
+            UICtrl.displayMonth();
             UICtrl.displayBudget({
                 budget: 0,
                 totalInc: 0,
